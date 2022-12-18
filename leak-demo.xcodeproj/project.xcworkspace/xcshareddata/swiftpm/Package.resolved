@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "leakedviewcontrollerdetector",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Janneman84/LeakedViewControllerDetector",
+      "state" : {
+        "revision" : "9e43e969694be5e374f0067f21685e5385ffadac",
+        "version" : "1.2.0"
+      }
+    },
+    {
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage",

@@ -37,6 +37,11 @@ class UserTableViewController: UITableViewController {
       NotificationCenter.default.post(name: self.fetchUserNotificationName, object: nil)
     }
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self, name: fetchUserNotificationName, object: nil)
+  }
     
   @objc private func fetchUsers() {
     print(">>>> fetch users")
@@ -44,7 +49,7 @@ class UserTableViewController: UITableViewController {
       with: .init(url: URL(string:"https://dummyjson.com/users")!)) { data, res, error in
         let response = try! JSONDecoder().decode(UsersResponse.self, from: data!)
         self.users = response.users
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [unowned self] in
           self.navigationItem.title = "Users - \(response.users.count)"
           print(">>>> reload tableView")
           self.tableView.reloadData()
@@ -67,16 +72,16 @@ class UserTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! UserCell
     cell.configure(user: users[indexPath.item])
-    cell.eventPublisher.sink { event in
+    cell.eventPublisher.sink { [weak self] event in
       switch event {
       case .showDetailButtonTapped(let fullName):
         print(">>>> show detail")
-        self.performSegue(withIdentifier: "showDetail", sender: fullName)
+        self?.performSegue(withIdentifier: "showDetail", sender: fullName)
       case .showEmailButtonTapped(let email):
         print(">>>> showAlert \(email)")
-        self.showAlert(email: email)
+        self?.showAlert(email: email)
       }
-    }.store(in: &cancellables)
+    }.store(in: &cell.cancellabes)
     return cell
   }
   
@@ -104,8 +109,13 @@ class UserCell: UITableViewCell, InfoViewDelegate {
   private let eventSubject = PassthroughSubject<UserCellEvent, Never>()
   var eventPublisher: AnyPublisher<UserCellEvent, Never> { eventSubject.eraseToAnyPublisher() }
   
-  private(set) var cancellabes = Set<AnyCancellable>()
+  var cancellabes = Set<AnyCancellable>()
   private var user: User?
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    cancellabes = Set<AnyCancellable>()
+  }
   
   func configure(user: User) {
     self.user = user
@@ -139,7 +149,7 @@ struct User: Decodable {
   }
 }
 
-protocol InfoViewDelegate {
+protocol InfoViewDelegate: AnyObject {
   func infoViewDidTap()
 }
 
@@ -147,7 +157,7 @@ class InfoView: UIView {
   
   @IBOutlet weak var imageView: UIImageView!
   
-  var delegate: InfoViewDelegate?
+  weak var delegate: InfoViewDelegate?
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)

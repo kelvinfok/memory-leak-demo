@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D68AAB3294E19820022EAC3 /* LeakedViewControllerDetector in Frameworks */ = {isa = PBXBuildFile; productRef = 8D68AAB2294E19820022EAC3 /* LeakedViewControllerDetector */; };
 		8D82195D294CE4EC0039DFED /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D82195C294CE4EC0039DFED /* DetailViewController.swift */; };
 		8DEEE4A5294875E80093E57B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEE4A4294875E80093E57B /* AppDelegate.swift */; };
 		8DEEE4A7294875E80093E57B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEEE4A6294875E80093E57B /* SceneDelegate.swift */; };
@@ -35,6 +36,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DEEE4BA294877170093E57B /* SDWebImage in Frameworks */,
+				8D68AAB3294E19820022EAC3 /* LeakedViewControllerDetector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,6 +92,7 @@
 			name = "leak-demo";
 			packageProductDependencies = (
 				8DEEE4B9294877170093E57B /* SDWebImage */,
+				8D68AAB2294E19820022EAC3 /* LeakedViewControllerDetector */,
 			);
 			productName = "leak-demo";
 			productReference = 8DEEE4A1294875E80093E57B /* leak-demo.app */;
@@ -121,6 +124,7 @@
 			mainGroup = 8DEEE498294875E70093E57B;
 			packageReferences = (
 				8DEEE4B8294877170093E57B /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				8D68AAB1294E19820022EAC3 /* XCRemoteSwiftPackageReference "LeakedViewControllerDetector" */,
 			);
 			productRefGroup = 8DEEE4A2294875E80093E57B /* Products */;
 			projectDirPath = "";
@@ -370,6 +374,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		8D68AAB1294E19820022EAC3 /* XCRemoteSwiftPackageReference "LeakedViewControllerDetector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Janneman84/LeakedViewControllerDetector";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		8DEEE4B8294877170093E57B /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -381,6 +393,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8D68AAB2294E19820022EAC3 /* LeakedViewControllerDetector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8D68AAB1294E19820022EAC3 /* XCRemoteSwiftPackageReference "LeakedViewControllerDetector" */;
+			productName = LeakedViewControllerDetector;
+		};
 		8DEEE4B9294877170093E57B /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8DEEE4B8294877170093E57B /* XCRemoteSwiftPackageReference "SDWebImage" */;
